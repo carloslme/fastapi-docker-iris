@@ -16,9 +16,24 @@ def get_test_response_data() -> list:
     return [(4, 6, 5, 7, "virginica", 1.0), (1, 2, 3, 4, "virginica", 0.96)]
 
 
-@pytest.mark.parametrize("sepal_length, sepal_width, petal_length, petal_width, type_flower, accuracy", get_test_response_data())
-def test_response_parametrize(sepal_length: any, sepal_width: any, petal_length: any, petal_width: any, type_flower:any, accuracy:any) -> None:
-    iris = Iris(sepal_length=sepal_length,sepal_width = sepal_width,petal_length = petal_length,petal_width = petal_width)
+@pytest.mark.parametrize(
+    "sepal_length, sepal_width, petal_length, petal_width, type_flower, accuracy",
+    get_test_response_data(),
+)
+def test_response_parametrize(
+    sepal_length: any,
+    sepal_width: any,
+    petal_length: any,
+    petal_width: any,
+    type_flower: any,
+    accuracy: any,
+) -> None:
+    iris = Iris(
+        sepal_length=sepal_length,
+        sepal_width=sepal_width,
+        petal_length=petal_length,
+        petal_width=petal_width,
+    )
 
     classifier = IrisClassifier()
 

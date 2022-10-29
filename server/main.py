@@ -22,19 +22,22 @@ logger.addHandler(stream_handler)  # Se agrega handler para stream
 
 app = FastAPI()
 
+
 @app.get("/")
 def read_root():
-    return 'Iris classifier is all ready to go!'
+    return "Iris classifier is all ready to go!"
 
-@app.get('/healthcheck', status_code=200)
+
+@app.get("/healthcheck", status_code=200)
 async def healthcheck():
-    logger.info('Servers is all ready to go!')
-    return 'Iris classifier is all ready to go!'
+    logger.info("Servers is all ready to go!")
+    return "Iris classifier is all ready to go!"
 
-@app.post('/classify_iris')
+
+@app.post("/classify_iris")
 async def classify(iris_features: Iris):
     logger.debug(f"Incoming iris features to the server: {iris_features}")
     iris_classifier = IrisClassifier()
     response = JSONResponse(iris_classifier.classify_iris(iris_features))
-    logger.debug("Outgoing classification from the server: {response}")
+    logger.debug(f"Outgoing classification from the server: {response}")
     return response
