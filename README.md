@@ -55,25 +55,18 @@ $ docker-compose up --build
 You will see something like this:
 ```
 Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
-Creating iris-api-dev_server_1 ... done
-Creating iris-api-dev_frontend_1 ... done
-Attaching to iris-api-dev_server_1, iris-api-dev_frontend_1
-server_1    | INFO:     Will watch for changes in these directories: ['/app']
-server_1    | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-server_1    | INFO:     Started reloader process [1] using StatReload
-frontend_1  | INFO:     Will watch for changes in these directories: ['/app']
-frontend_1  | INFO:     Uvicorn running on http://0.0.0.0:3000 (Press CTRL+C to quit)
-frontend_1  | INFO:     Started reloader process [1] using StatReload
-frontend_1  | INFO:     Started server process [9]
-frontend_1  | INFO:     Waiting for application startup.
-frontend_1  | INFO:     Application startup complete.
-server_1    | INFO:     Started server process [8]
-server_1    | INFO:     Waiting for application startup.
-server_1    | INFO:     Application startup complete.
+Starting iris-api-dev_iris_classifier_v1_stag_1 ... done
+Starting iris-api-dev_iris_classifier_v2_prod_1 ... done
+Starting iris-api-dev_iris_classifier_v1_prod_1 ... done
+Starting iris-api-dev_iris_classifier_v3_stag_1 ... done
+Starting iris-api-dev_iris_classifier_v2_stag_1 ... done
+Starting iris-api-dev_frontend_1                ... done
+Attaching to iris-api-dev_iris_classifier_v1_stag_1, iris-api-dev_iris_classifier_v2_stag_1, iris-api-dev_iris_classifier_v3_stag_1, iris-api-dev_iris_classifier_v1_prod_1, iris-api-dev_iris_classifier_v2_prod_1, iris-api-dev_frontend_1
+.
+.
+.
 ```
 ## Open and check APIs
-* To open the Server, go to the address http://0.0.0.0:8000, you will see the message "Iris classifier is all ready to go!"
-
 * To open the Frontend, go to the address http://0.0.0.0:3000, you will see the message "Front-end is all ready to go!"
 
 
@@ -91,10 +84,14 @@ Corresponding values are the measurements in cm.
 ### CURL request
 
 ```
-curl 'http://localhost:3000/iris/classify_iris' -X POST -H 'Content-Type: application/json' -d '{"sepal_length": 5, "sepal_width": 2, "petal_length": 3, "petal_width": 4}'
+curl -X 'POST' \
+  'http://localhost:3000/prod/v2/classify_iris' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"sepal_length": 5, "sepal_width": 2, "petal_length": 3, "petal_width": 4}'
 ```
 ### FastAPI UI request
-* Go to the http://localhost:3000/docs, and in the POST request body `/v1/classify` copy this:
+* Go to the http://localhost:3000/docs, and in the POST request body `/prod/v2/classify_iris` copy this:
 ```
 {"sepal_length": 5, "sepal_width": 2, "petal_length": 3, "petal_width": 4}
 ```
