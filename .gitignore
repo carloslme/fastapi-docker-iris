@@ -3,3 +3,6 @@
 *.pytest_cache
 /venv
 venv
+*.DS_Store
+/.DS_Store
+.DS_Store

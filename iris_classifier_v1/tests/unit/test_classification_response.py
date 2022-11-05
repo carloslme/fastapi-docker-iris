@@ -8,7 +8,7 @@ import pytest
 path_root = Path(__file__).parents[2]
 sys.path.append(str(path_root))
 
-from classifier.iris_classifier import IrisClassifier
+from classifier.iris_classifier_v1 import IrisClassifier
 from models.models import Iris
 
 

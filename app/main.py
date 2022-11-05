@@ -20,20 +20,18 @@ logger.addHandler(stream_handler)  # Se agrega handler para stream
 app = FastAPI()
 
 # ML model prediction function using the prediction API request
-def predict():
-
-    url3 = "http://server.docker:8000/"
-
-    response = requests.request("GET", url3)
+def predict_iris_v1(input):
+    url3 = "http://iris_classifier_v1.docker:8000/v1/classify_iris"
+    logger.info("Prediction for Iris Classifier V1 started")
+    response = requests.post(url3, json=input)
     response = response.text
 
     return response
 
 
-def predict_iris(input):
-    url3 = "http://server.docker:8000/classify_iris"
-
-    logger.debug("Test text DEBUG")
+def predict_iris_v2(input):
+    url3 = "http://iris_classifier_v2.docker:8001/v2/classify_iris"
+    logger.info("Prediction for Iris Classifier V2 started")
     response = requests.post(url3, json=input)
     response = response.text
 
@@ -46,16 +44,34 @@ def read_root():
     return "Front-end is all ready to go!"
 
 
-@app.post("/v1/classify")
+@app.post("/v1/classify_iris")
 def classify(payload: dict = Body(...)):
     logger.debug(f"Incoming input in the front end: {payload}")
-    response = predict_iris(payload)
+    response = predict_iris_v1(payload)
     return {"response": response}
 
 
-@app.get("/v1/healthcheck")
+@app.get("/v1/healthcheck_iris")
 async def v1_healhcheck():
-    url3 = "http://server.docker:8000/"
+    url3 = "http://iris_classifier_v1.docker:8000/"
+
+    response = requests.request("GET", url3)
+    response = response.text
+    logger.info(f"Checking health: {response}")
+
+    return response
+
+
+@app.post("/v2/classify_iris")
+def classify(payload: dict = Body(...)):
+    logger.debug(f"Incoming input in the front end: {payload}")
+    response = predict_iris_v2(payload)
+    return {"response": response}
+
+
+@app.get("/v2/healthcheck_iris")
+async def v1_healhcheck():
+    url3 = "http://iris_classifier_v2.docker:8001/"
 
     response = requests.request("GET", url3)
     response = response.text

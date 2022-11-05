@@ -1,0 +1,4 @@
+DEBUG: 2022-11-04 13:55:08,584|main|Incoming iris features to the server: sepal_length=5.0 sepal_width=2.0 petal_length=3.0 petal_width=4.0
+DEBUG: 2022-11-04 13:55:08,632|main|Outgoing classification from the server: <starlette.responses.JSONResponse object at 0x7f851e628f50>
+DEBUG: 2022-11-04 13:55:22,556|main|Incoming iris features to the server: sepal_length=5.0 sepal_width=2.0 petal_length=3.0 petal_width=4.0
+DEBUG: 2022-11-04 13:55:22,590|main|Outgoing classification from the server: <starlette.responses.JSONResponse object at 0x7f851e3ab6d0>
