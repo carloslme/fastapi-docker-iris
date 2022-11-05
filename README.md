@@ -40,6 +40,12 @@ $ git checkout dev
 
 
 # Usage
+## Create the network
+First create the network AIService by running this command:
+```
+$ docker network create AIservice
+```
+
 ## Run Docker Compose
 * Be sure you are un the directory where the docker-compose.yml file is located
 * Run next command to start the Server and Frontend APIs
