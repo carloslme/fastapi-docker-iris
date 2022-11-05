@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   iris_classifier_v1_prod:
-    build: iris_classifier_v1
+    build: iris_classifier_v1_prod
     ports:
       - 8000:8000
     networks:
@@ -11,7 +11,7 @@ services:
           - iris_classifier_v1_prod.docker
 
   iris_classifier_v2_prod:
-    build: iris_classifier_v2
+    build: iris_classifier_v2_prod
     ports:
       - 8001:8001
     networks:
