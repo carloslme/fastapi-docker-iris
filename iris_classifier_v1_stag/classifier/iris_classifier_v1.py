@@ -14,7 +14,7 @@ logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter("%(levelname)s: %(asctime)s|%(name)s|%(message)s")
 
-file_handler = logging.FileHandler("prod_iris_classifier_v1.log")
+file_handler = logging.FileHandler("staging_iris_classifier_v1.log")
 file_handler.setFormatter(formatter)
 
 # THIS IS THE NEW CHANGE TO STREAM LOGS
@@ -25,11 +25,11 @@ stream_handler.setFormatter(formatter)
 class IrisClassifier:
     def __init__(self):
         self.X, self.y = load_iris(return_X_y=True)
-        logger.info("Data Production Iris Classifier V1 loaded")
+        logger.info("Data Staging Iris Classifier V1 loaded")
         self.clf = self.train_model()
-        logger.info("Model Production Iris Classifier V1 trained")
+        logger.info("Model Staging Iris Classifier V1 trained")
         self.iris_type = {0: "setosa", 1: "versicolor", 2: "virginica"}
-        logger.info("Production Iris Classifier V1 types set up")
+        logger.info("Staging Iris Classifier V1 types set up")
 
     def train_model(self) -> LogisticRegression:
         return LogisticRegression(
@@ -44,6 +44,6 @@ class IrisClassifier:
             "probability": round(max(prediction[0]), 2),
         }
         logger.debug(
-            f"The output returned from Production Iris Classifier V1 to the frontend is {result}"
+            f"The output returned from Staging Iris Classifier V1 to the frontend is {result}"
         )
         return result

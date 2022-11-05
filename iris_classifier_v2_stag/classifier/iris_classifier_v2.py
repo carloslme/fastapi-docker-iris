@@ -1,3 +1,4 @@
+import joblib
 import logging
 import sys
 
@@ -14,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter("%(levelname)s: %(asctime)s|%(name)s|%(message)s")
 
-file_handler = logging.FileHandler("prod_iris_classifier_v1.log")
+file_handler = logging.FileHandler("stag_iris_classifier_v2.log")
 file_handler.setFormatter(formatter)
 
 # THIS IS THE NEW CHANGE TO STREAM LOGS
@@ -25,25 +26,34 @@ stream_handler.setFormatter(formatter)
 class IrisClassifier:
     def __init__(self):
         self.X, self.y = load_iris(return_X_y=True)
-        logger.info("Data Production Iris Classifier V1 loaded")
-        self.clf = self.train_model()
-        logger.info("Model Production Iris Classifier V1 trained")
+        logger.info("Data Staging Iris Classifier V2 loaded")
+        self.clf = self.export_model()
+        logger.info("Model Staging Iris Classifier V2 exported and saved")
         self.iris_type = {0: "setosa", 1: "versicolor", 2: "virginica"}
-        logger.info("Production Iris Classifier V1 types set up")
+        logger.info("Iris Classifier V2 types set up")
 
     def train_model(self) -> LogisticRegression:
         return LogisticRegression(
             solver="lbfgs", max_iter=1000, multi_class="multinomial"
         ).fit(self.X, self.y)
 
+    def export_model(self):
+        joblib.dump(self.train_model(), "iris_model_stag.pkl")
+        logger.info("Model Staging Iris Classifier V2 trained")
+        return 0
+
+    def load_model(self):
+        return joblib.load("iris_model_stag.pkl")
+
     def classify_iris(self, iris: Iris):
         X = [iris.sepal_length, iris.sepal_width, iris.petal_length, iris.petal_width]
-        prediction = self.clf.predict_proba([X])
+        model = self.load_model()
+        prediction = model.predict_proba([X])
         result = {
             "class": self.iris_type[np.argmax(prediction)],
             "probability": round(max(prediction[0]), 2),
         }
         logger.debug(
-            f"The output returned from Production Iris Classifier V1 to the frontend is {result}"
+            f"The output returned from Staging Iris Classifier V2 to the frontend is {result}"
         )
         return result

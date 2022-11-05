@@ -11,7 +11,7 @@ logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter("%(levelname)s: %(asctime)s|%(name)s|%(message)s")
 
-file_handler = logging.FileHandler("prod_server_iris_classifier_v1.log")
+file_handler = logging.FileHandler("staging_server_iris_classifier_v1.log")
 file_handler.setFormatter(formatter)
 
 stream_handler = logging.StreamHandler()
@@ -25,23 +25,23 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return "Production Server Iris Classifier V1 is all ready to go!"
+    return "Staging Server Iris Classifier V1 is all ready to go!"
 
 
-@app.get("/prod/v1/healthcheck", status_code=200)
+@app.get("/stag/v1/healthcheck", status_code=200)
 async def healthcheck():
-    logger.info("Production Iris Classifier V1 is all ready to go!")
-    return "Production Server Iris Classifier V1 is all ready to go!"
+    logger.info("Staging Iris Classifier V1 is all ready to go!")
+    return "Staging Server Iris Classifier V1 is all ready to go!"
 
 
-@app.post("/prod/v1/classify_iris")
+@app.post("/stag/v1/classify_iris")
 async def classify(iris_features: Iris):
     logger.debug(
-        f"Incoming iris features to the Production Iris Classifier V1: {iris_features}"
+        f"Incoming iris features to the Staging Iris Classifier V1: {iris_features}"
     )
     iris_classifier = IrisClassifierV1()
     response = JSONResponse(iris_classifier.classify_iris(iris_features))
     logger.debug(
-        f"Outgoing classification from the Production Iris Classifier V1: {response}"
+        f"Outgoing classification from the Staging Iris Classifier V1: {response}"
     )
     return response

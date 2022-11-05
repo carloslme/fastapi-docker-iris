@@ -10,6 +10,15 @@ services:
         aliases:
           - iris_classifier_v1_prod.docker
 
+  iris_classifier_v1_stag:
+    build: iris_classifier_v1_stag
+    ports:
+      - 8002:8002
+    networks:
+      AIservice:
+        aliases:
+          - iris_classifier_v1_stag.docker
+
   iris_classifier_v2_prod:
     build: iris_classifier_v2_prod
     ports:
@@ -18,6 +27,15 @@ services:
       AIservice:
         aliases:
           - iris_classifier_v2_prod.docker
+
+  iris_classifier_v2_stag:
+    build: iris_classifier_v2_stag
+    ports:
+      - 8003:8003
+    networks:
+      AIservice:
+        aliases:
+          - iris_classifier_v2_stag.docker
 
   frontend:
     build: app
@@ -30,6 +48,8 @@ services:
     depends_on:
       - iris_classifier_v1_prod
       - iris_classifier_v2_prod
+      - iris_classifier_v1_stag
+      - iris_classifier_v2_stag
 
 networks:
   AIservice:
