@@ -21,8 +21,8 @@ app = FastAPI()
 
 # ML model prediction function using the prediction API request
 def predict_iris_v1(input):
-    url3 = "http://iris_classifier_v1.docker:8000/v1/classify_iris"
-    logger.info("Prediction for Iris Classifier V1 started")
+    url3 = "http://iris_classifier_v1_prod.docker:8000/prod/v1/classify_iris"
+    logger.info("Prediction for Production Iris Classifier V1 started")
     response = requests.post(url3, json=input)
     response = response.text
 
@@ -30,8 +30,8 @@ def predict_iris_v1(input):
 
 
 def predict_iris_v2(input):
-    url3 = "http://iris_classifier_v2.docker:8001/v2/classify_iris"
-    logger.info("Prediction for Iris Classifier V2 started")
+    url3 = "http://iris_classifier_v2_prod.docker:8001/prod/v2/classify_iris"
+    logger.info("Prediction for Production Iris Classifier V2 started")
     response = requests.post(url3, json=input)
     response = response.text
 
@@ -44,16 +44,16 @@ def read_root():
     return "Front-end is all ready to go!"
 
 
-@app.post("/v1/classify_iris")
+@app.post("/prod/v1/classify_iris")
 def classify(payload: dict = Body(...)):
     logger.debug(f"Incoming input in the front end: {payload}")
     response = predict_iris_v1(payload)
     return {"response": response}
 
 
-@app.get("/v1/healthcheck_iris")
+@app.get("/prod/v1/healthcheck_iris")
 async def v1_healhcheck():
-    url3 = "http://iris_classifier_v1.docker:8000/"
+    url3 = "http://iris_classifier_v1_prod.docker:8000/"
 
     response = requests.request("GET", url3)
     response = response.text
@@ -62,16 +62,16 @@ async def v1_healhcheck():
     return response
 
 
-@app.post("/v2/classify_iris")
+@app.post("/prod/v2/classify_iris")
 def classify(payload: dict = Body(...)):
     logger.debug(f"Incoming input in the front end: {payload}")
     response = predict_iris_v2(payload)
     return {"response": response}
 
 
-@app.get("/v2/healthcheck_iris")
+@app.get("/prod/v2/healthcheck_iris")
 async def v1_healhcheck():
-    url3 = "http://iris_classifier_v2.docker:8001/"
+    url3 = "http://iris_classifier_v2_prod.docker:8001/"
 
     response = requests.request("GET", url3)
     response = response.text

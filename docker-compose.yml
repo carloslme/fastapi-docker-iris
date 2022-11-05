@@ -1,23 +1,23 @@
 version: "3.7"
 
 services:
-  iris_classifier_v1:
+  iris_classifier_v1_prod:
     build: iris_classifier_v1
     ports:
       - 8000:8000
     networks:
       AIservice:
         aliases:
-          - iris_classifier_v1.docker
+          - iris_classifier_v1_prod.docker
 
-  iris_classifier_v2:
+  iris_classifier_v2_prod:
     build: iris_classifier_v2
     ports:
       - 8001:8001
     networks:
       AIservice:
         aliases:
-          - iris_classifier_v2.docker
+          - iris_classifier_v2_prod.docker
 
   frontend:
     build: app
@@ -28,8 +28,8 @@ services:
         aliases:
           - frontend.docker
     depends_on:
-      - iris_classifier_v1
-      - iris_classifier_v2
+      - iris_classifier_v1_prod
+      - iris_classifier_v2_prod
 
 networks:
   AIservice:
