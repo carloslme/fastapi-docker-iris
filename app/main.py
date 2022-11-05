@@ -56,6 +56,15 @@ def predict_stag_iris_v2(input):
     return response
 
 
+def predict_stag_iris_v3(input):
+    url3 = "http://iris_classifier_v3_stag.docker:8004/stag/v3/classify_iris"
+    logger.info("Prediction for Staging Iris Classifier V3 started")
+    response = requests.post(url3, json=input)
+    response = response.text
+
+    return response
+
+
 @app.get("/")
 def read_root():
     logger.info("Front-end is all ready to go!")
@@ -127,6 +136,17 @@ async def v1_healhcheck():
     return response
 
 
+@app.get("/stag/v3/healthcheck_iris")
+async def v1_healhcheck():
+    url3 = "http://iris_classifier_v3_stag.docker:8004/"
+
+    response = requests.request("GET", url3)
+    response = response.text
+    logger.info(f"Checking health: {response}")
+
+    return response
+
+
 @app.post("/stag/v2/classify_iris")
 def classify(payload: dict = Body(...)):
     logger.debug(f"Incoming input in the front end: {payload}")
@@ -134,12 +154,8 @@ def classify(payload: dict = Body(...)):
     return {"response": response}
 
 
-@app.get("/prod/v1/healthcheck_iris")
-async def v1_healhcheck():
-    url3 = "http://iris_classifier_v1_prod.docker:8000/"
-
-    response = requests.request("GET", url3)
-    response = response.text
-    logger.info(f"Checking health: {response}")
-
-    return response
+@app.post("/stag/v3/classify_iris")
+def classify(payload: dict = Body(...)):
+    logger.debug(f"Incoming input in the front end: {payload}")
+    response = predict_stag_iris_v3(payload)
+    return {"response": response}

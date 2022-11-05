@@ -37,6 +37,15 @@ services:
         aliases:
           - iris_classifier_v2_stag.docker
 
+  iris_classifier_v3_stag:
+    build: iris_classifier_v3_stag
+    ports:
+      - 8004:8004
+    networks:
+      AIservice:
+        aliases:
+          - iris_classifier_v3_stag.docker
+
   frontend:
     build: app
     ports:
