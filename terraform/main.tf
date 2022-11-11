@@ -48,10 +48,11 @@ resource "aws_instance" "serve_model" {
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   vpc_security_group_ids      = [aws_security_group.sg.id]
-  key_name                    = "terraform_iris"
+  key_name                    = "tf-iris"
   user_data                   = file("ubuntu.sh")
 }
 
 output "instance_public_ip" {
   value = aws_instance.serve_model.public_ip
 }
+
