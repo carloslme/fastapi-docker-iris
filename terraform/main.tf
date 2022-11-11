@@ -52,11 +52,6 @@ resource "aws_instance" "serve_model" {
   user_data                   = file("ubuntu.sh")
 }
 
-resource "aws_key_pair" "terraform-iris-key" {
-  key_name   = "terraform-iris-key"
-  public_key = "terraform-iris-key.pub"
-}
-
 output "instance_public_ip" {
   value = aws_instance.serve_model.public_ip
 }
