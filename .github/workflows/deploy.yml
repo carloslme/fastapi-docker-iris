@@ -39,16 +39,13 @@ jobs:
   
   deployModel:
     name: Access server
-    on: push
-    jobs:
-      access_server:
-        name: Access server
-        runs-on: ubuntu-latest
-        steps:
-          - name: Create a file
-            uses: appleboy/ssh-action@master
-            with:
-              host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
-              username: ubuntu
-              key: ${{ secrets.PRIVATE_KEY }}
-              script: echo hello world > hello.txt
+      needs: deployTerraform
+      runs-on: ubuntu-latest
+      steps:
+        - name: Create a file
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
+            username: ubuntu
+            key: ${{ secrets.PRIVATE_KEY }}
+            script: echo hello world > hello.txt
