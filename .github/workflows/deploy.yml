@@ -38,25 +38,17 @@ jobs:
         working-directory: terraform
   
   deployModel:
-    name: Clone Model Repo and start server to serve model
-    needs: deployTerraform
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: executing ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_KEY }}
-          script: |
-            until [ -d iris ]
-            do
-                sleep 5
-            done
-            echo "File found"
-            cd iris
-            sudo docker compose down
-            cd ..
-            sudo rm -rf iris
-            echo "Here!"
+    name: Access server
+    on: push
+    jobs:
+      access_server:
+        name: Access server
+        runs-on: ubuntu-latest
+        steps:
+          - name: Create a file
+            uses: appleboy/ssh-action@master
+            with:
+              host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
+              username: ubuntu
+              key: ${{ secrets.PRIVATE_KEY }}
+              script: echo hello world > hello.txt
