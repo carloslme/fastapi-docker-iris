@@ -39,10 +39,10 @@ jobs:
   
   deployModel:
     name: Access server
-      needs: deployTerraform
-      runs-on: ubuntu-latest
-      steps:
-        - name: Create a file
+    needs: deployTerraform
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create a file
           uses: appleboy/ssh-action@master
           with:
             host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
