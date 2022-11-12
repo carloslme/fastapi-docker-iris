@@ -47,5 +47,5 @@ jobs:
         with:
           host: ${{ needs.deployTerraform.outputs.SERVER_PUBLIC_IP }}
           username: ubuntu
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.SERVER_KEY }}
           script: echo hello world > hello.txt
