@@ -59,4 +59,7 @@ jobs:
             sudo docker compose down
             cd ..
             sudo rm -rf iris
-            echo "Here!"
+            git clone -b ${{github.ref_name}} https://github.com/carloslme/fastapi-docker-iris.git
+            git checkout dev
+            cd iris
+            sudo docker compose up --build  -d --remove-orphans serve
