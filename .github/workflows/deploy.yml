@@ -59,7 +59,7 @@ jobs:
             sudo docker compose down
             cd ..
             sudo rm -rf iris
-            git clone -b ${{github.ref_name}} https://github.com/carloslme/fastapi-docker-iris.git
-            git checkout dev
+            git clone -b dev https://github.com/carloslme/fastapi-docker-iris.git
             cd fastapi-docker-iris
-            sudo docker compose up --build  -d --remove-orphans serve
+            sudo docker network create AIservice
+            sudo docker compose up --build  -d --remove-orphans
